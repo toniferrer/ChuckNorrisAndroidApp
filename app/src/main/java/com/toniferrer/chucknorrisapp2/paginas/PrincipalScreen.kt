@@ -3,6 +3,7 @@ package com.toniferrer.chucknorrisapp2.paginas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,9 +39,25 @@ fun PrincipalScreen (navController: NavController, viewModel: BromaViewModel = v
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 66.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 36.dp, start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Chuck Norris App",
+                style = MaterialTheme.typography.labelLarge,
+            )
+
+            Button(
+                onClick = { navController.navigate("FavoritosScreen") },
+            ) {
+                Text("Favoritos")
+            }
+        }
 
         Text(
             text = bromaRandom?.value ?: "Cargando...",
@@ -48,20 +65,34 @@ fun PrincipalScreen (navController: NavController, viewModel: BromaViewModel = v
             modifier = Modifier.fillMaxWidth()
         )
 
-        Button(
-            onClick = {
-                viewModel.fetchBromaRandom()
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Text("Nuevo chiste")
+        Row {
+            Button(
+                onClick = {
+                    viewModel.fetchBromaRandom()
+                },
+                modifier = Modifier
+                    .padding(end = 10.dp)
+            ) {
+                Text("Nuevo chiste")
+            }
+
+            Button(
+                onClick = {
+                    bromaRandom?.let { broma ->
+                        viewModel.anadirFavorito(broma)
+                    }
+                },
+            ) {
+                Text("Añadir a favoritos")
+            }
         }
 
         Text(
             text = "Descubre bromas por categorias:",
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding( top = 26.dp)
         )
 
         LazyColumn {

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.toniferrer.chucknorrisapp2.paginas.CategoriaScreen
+import com.toniferrer.chucknorrisapp2.paginas.FavoritosScreen
 import com.toniferrer.chucknorrisapp2.paginas.PrincipalScreen
 
 @Composable
@@ -19,6 +20,9 @@ fun NavegacionApp() {
     ) {
         composable("PrincipalScreen") {
             PrincipalScreen(navController)
+        }
+        composable("FavoritosScreen") {
+            FavoritosScreen(navController)
         }
         composable(
             route = "CategoriaScreen/{category}",
